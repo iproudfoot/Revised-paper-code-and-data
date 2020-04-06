@@ -1,0 +1,20 @@
+function f = model1T1(t,y,k1,k2,k3,k4,k5,k6,a1,a2,a3,b1,b2,b3,Kbar,alpha,V_onecell,gamma1,gamma2,gamma3,k_cellnumber,gamma,Cn,V_medium)
+% y(1) = N
+% y(2) = C_if
+% y(3) = C_is
+% y(4) = C_ins
+% y(5) = C_ef
+% y(6) = C_es
+% y(7) = T
+% y(8) = B
+
+f = zeros(8,1);
+v = gamma1 - gamma2*y(3)/(gamma3+y(3)); % population growth rate
+f(1) = y(1)*v;
+f(2) = alpha*(y(5)-y(2))/V_onecell - k1*(y(8)-y(3))*y(2) + k2*y(3) - k3*y(2) + k4*y(4) - y(2)*v;
+f(3) =  k1*(y(8)-y(3))*y(2) - k2*y(3) - y(3)*v;
+f(4) = k3*y(2) - k4*y(4) - y(4)*v;
+f(5) = alpha*(y(2)-y(5))*y(1)/V_medium - k5*y(5)/(Kbar + y(5)) + k6*y(6);
+f(6) = k5*y(5)/(Kbar + y(5)) - k6*y(6);
+f(7) = a1 + a2*y(3) - a3*(y(7)-y(8));
+f(8) = (b1 + b2*y(3)/(b3 + y(3)))*(y(7)-y(8)) - 2*b1*y(8) - gamma*Cn*(y(8)-y(3));
